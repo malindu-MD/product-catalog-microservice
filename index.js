@@ -6,12 +6,10 @@ const app = express();
 connectDB();
 
 app.use(express.json());
-app.get('/', (req, res) => {
-    res.status(200).send('Healthy');
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
   });
 app.use('/products', require('./routes/productRoutes'));
 
-app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-    console.log("Server running malindu...");
-  });
+app.listen(80, () => console.log("Server running on port 80"));
   
