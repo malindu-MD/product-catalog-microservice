@@ -12,6 +12,6 @@ app.get('/', (req, res) => {
 app.use('/products', require('./routes/productRoutes'));
 
 app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-    console.log("Server running...");
+    console.log("Server running malindu...");
   });
   
