@@ -51,11 +51,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
-
-      - name: Deploy to Amazon ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: .github/ecs/ecs-task-def.json  # or .github/ecs/ecs-task-def.json if stored in subfolder
-          service: product-catalog-service    # Replace with your ECS service name
-          cluster: product-catalogcluster-sample    # Replace with your ECS cluster name
-          wait-for-service-stability: true
+      
+      - name: Force new deployment of ECS service
+        run: |
+          aws ecs update-service --cluster product-catalogcluster-sample \
+                                --service product-catalog-service \
+                                --force-new-deployment
