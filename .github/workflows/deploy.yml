@@ -1,0 +1,39 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Lint (Optional)
+        run: echo "Add linting later if needed"
+
+      - name: Run Tests (Optional)
+        run: echo "Add tests later if needed"
+
+      - name: Build Docker Image
+        run: docker build -t your-dockerhub-username/product-catalog:latest .
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Image to DockerHub
+        run: docker push your-dockerhub-username/product-catalog:latest
