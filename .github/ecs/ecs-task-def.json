@@ -16,14 +16,14 @@
         ],
         "essential": true,
         "environment": [
-          {
-            "name": "PORT",
-            "value": "${PORT}"
-          },
-          {
-            "name": "MONGO_URI",
-            "value": "${MONGO_URI}"
-          }
+            {
+                "name": "PORT",
+                "value": "3000"
+            },
+            {
+                "name": "MONGO_URI",
+                "value": "mongodb+srv://kamani6088:dsvc30PcPUrN6x7L@cluster0.8egotrt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+            }
         ],
         "logConfiguration": {
           "logDriver": "awslogs",
