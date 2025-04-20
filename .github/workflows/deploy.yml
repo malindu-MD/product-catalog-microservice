@@ -36,4 +36,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image to DockerHub
-        run: docker push your-dockerhub-username/product-catalog:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/product-catalog:latest
