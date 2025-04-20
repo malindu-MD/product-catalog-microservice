@@ -27,7 +27,7 @@ jobs:
         run: echo "Add tests later if needed"
 
       - name: Build Docker Image
-        run: docker build -t your-dockerhub-username/product-catalog:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product-catalog:latest .
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
