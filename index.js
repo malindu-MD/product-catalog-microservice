@@ -11,5 +11,5 @@ app.get('/health', (req, res) => {
   });
 app.use('/products', require('./routes/productRoutes'));
 
-app.listen(80, () => console.log("Server running on port 80"));
+app.listen(3000, () => console.log("Server running on port 3000"));
   
