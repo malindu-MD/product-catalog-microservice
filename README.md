@@ -16,7 +16,7 @@ This microservice provides a RESTful API to manage product catalog data for an e
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structures
 
 ```
 ├── controllers/               # Route logic and business logic
