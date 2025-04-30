@@ -29,10 +29,16 @@ jobs:
               -e "s|\${MONGO_URI}|${{ secrets.MONGODB_URI }}|g" \
               .github/ecs/ecs-task-def.json > task-def.json
 
-
       - name: Run Tests (Optional)
         run: echo "Add tests later if needed"
 
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
+      
       - name: Build Docker Image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product-catalog:latest .
 
@@ -55,5 +61,5 @@ jobs:
       - name: Force new deployment of ECS service
         run: |
           aws ecs update-service --cluster product-catalogcluster-sample \
-                                --service product-catalog-service \
-                                --force-new-deployment
+                                 --service product-catalog-service \
+                                 --force-new-deployment
