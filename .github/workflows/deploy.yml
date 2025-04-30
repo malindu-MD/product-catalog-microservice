@@ -23,12 +23,6 @@ jobs:
       - name: Run Lint (Optional)
         run: echo "Add linting later if needed"
 
-      - name: Replace env variables in task definition
-        run: |
-          sed -e "s|\${PORT}|${{ secrets.PORT }}|g" \
-              -e "s|\${MONGO_URI}|${{ secrets.MONGODB_URI }}|g" \
-              .github/ecs/ecs-task-def.json > task-def.json
-
       - name: Run Tests (Optional)
         run: echo "Add tests later if needed"
 
