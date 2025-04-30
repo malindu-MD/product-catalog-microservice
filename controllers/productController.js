@@ -11,38 +11,49 @@ const Product = require('../models/product');
  */
 exports.getProducts = async (req, res, next) => {
   try {
-    const { category, price_min, price_max, search, page = 1, limit = 10 } = req.query;
+    // Safely extract and validate query parameters
+    const rawCategory = req.query.category;
+    const rawPriceMin = req.query.price_min;
+    const rawPriceMax = req.query.price_max;
+    const rawSearch = req.query.search;
+    const rawPage = parseInt(req.query.page, 10);
+    const rawLimit = parseInt(req.query.limit, 10);
 
-    // Construct filter based on query parameters
+    const page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
+    const limit = Number.isInteger(rawLimit) && rawLimit > 0 ? Math.min(rawLimit, 100) : 10;
+    const skip = (page - 1) * limit;
+
+    // Build filter object securely
     const filter = {};
-    if (category) filter.category = category;
-    if (price_min || price_max) {
+
+    if (typeof rawCategory === 'string' && rawCategory.trim()) {
+      filter.category = rawCategory.trim();
+    }
+
+    if (!isNaN(rawPriceMin) || !isNaN(rawPriceMax)) {
       filter.price = {};
-      if (price_min) filter.price.$gte = parseFloat(price_min);
-      if (price_max) filter.price.$lte = parseFloat(price_max);
-    }
-    if (search) {
-      filter.name = { $regex: search, $options: 'i' }; // Case-insensitive search
+      if (!isNaN(rawPriceMin)) filter.price.$gte = parseFloat(rawPriceMin);
+      if (!isNaN(rawPriceMax)) filter.price.$lte = parseFloat(rawPriceMax);
     }
 
-    // Pagination logic
-    const skip = (parseInt(page) - 1) * parseInt(limit);
+    if (typeof rawSearch === 'string' && rawSearch.trim()) {
+      filter.name = { $regex: rawSearch.trim(), $options: 'i' };
+    }
 
-    // Fetch filtered and paginated products from the database
-    const products = await Product.find(filter).skip(skip).limit(parseInt(limit));
-
-    // Get the total number of matching products for pagination
+    // Fetch products securely
+    const products = await Product.find(filter).skip(skip).limit(limit);
     const total = await Product.countDocuments(filter);
 
     res.status(200).json({
-      page: parseInt(page),
+      page,
       total_results: total,
       products,
     });
   } catch (error) {
-    next(error); // Pass errors to the error handler middleware
+    next(error);
   }
 };
+
 
 /**
  * Get a product by ID.
