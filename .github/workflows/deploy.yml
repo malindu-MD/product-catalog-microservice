@@ -43,7 +43,13 @@ jobs:
         with:
           command: test
           args: --severity-threshold=high
-        
+
+      - name: Monitor project in Snyk
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor  
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
