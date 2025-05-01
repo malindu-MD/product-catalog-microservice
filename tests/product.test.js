@@ -16,6 +16,25 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
+
+describe("Error Handling Middleware", () => {
+    it("should return a standardized error when invalid ObjectId is used", async () => {
+      const res = await request(app).get("/api/products/invalid-id");
+  
+      expect(res.statusCode).toBe(500);
+      expect(res.body).toHaveProperty("message");
+      expect(typeof res.body.message).toBe("string");
+  
+      if (process.env.NODE_ENV !== "production") {
+        expect(res.body).toHaveProperty("stack");
+        expect(typeof res.body.stack).toBe("string");
+      } else {
+        expect(res.body.stack).toBeNull();
+      }
+    });
+  });
+  
+
 describe("Product API", () => {
   it("GET /api/products - should return empty array", async () => {
     const res = await request(app).get("/api/products");
