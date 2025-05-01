@@ -88,6 +88,28 @@ describe("Product API", () => {
     expect(res.statusCode).toBe(500);
   });
 
+
+ 
+
+
+  it("GET /api/products?price_max=80 - should apply price filter (lte)", async () => {
+    const res = await request(app).get("/api/products?price_max=80");
+    expect(res.statusCode).toBe(200);
+    res.body.products.forEach(p => {
+      expect(p.price).toBeLessThanOrEqual(80);
+    });
+  });
+
+
+  
+  it("GET /api/products?page=-1&limit=999 - should default to page=1 and limit cap", async () => {
+    const res = await request(app).get("/api/products?page=-1&limit=999");
+    expect(res.statusCode).toBe(200);
+    expect(res.body.page).toBe(1);
+  });
+  
+  
+
   it("PUT /api/products/:id - should update a product", async () => {
     const product = await Product.create({
       name: "Mouse",
