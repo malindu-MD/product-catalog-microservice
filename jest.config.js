@@ -5,6 +5,7 @@ module.exports = {
     collectCoverageFrom: [
       "controllers/**/*.js",
       "routes/**/*.js",
+      "middleware/**/*.js",
       "index.js"
     ]
   };
