@@ -32,6 +32,15 @@ describe("Error Handling Middleware", () => {
         expect(res.body.stack).toBeNull();
       }
     });
+
+
+
+    it("GET /force-error - should return 500 and use errorHandler default", async () => {
+        const res = await request(app).get("/force-error");
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toHaveProperty("message", "Forced error for testing");
+      });
+      
   });
   
 
