@@ -32,6 +32,8 @@ jobs:
         run: npm install
 
       - name: Run Tests (Jest + Coverage)
+        env:
+          MONGO_URI: ${{ secrets.MONGODB_URI }}
         run: npm test
 
       - name: SonarCloud Scan
