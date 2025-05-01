@@ -8,6 +8,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongo:
+        image: mongo:5
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -20,11 +31,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Lint (Optional)
-        run: echo "Add linting later if needed"
-
-      - name: Run Tests (Optional)
-        run: echo "Add tests later if needed"
+      - name: Run Tests (Jest + Coverage)
+        run: npm test
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
@@ -32,7 +40,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: .
-      
+
       - name: Build Docker Image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product-catalog:latest .
 
@@ -51,7 +59,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
-      
+
       - name: Force new deployment of ECS service
         run: |
           aws ecs update-service --cluster product-catalogcluster-sample \
