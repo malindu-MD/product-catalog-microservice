@@ -7,6 +7,7 @@ module.exports = {
       "routes/**/*.js",
       "middleware/**/*.js",
       "index.js"
-    ]
+    ],
+    coveragePathIgnorePatterns: ["server.js","config/**/*.js","models/**/*.js"]
   };
   
