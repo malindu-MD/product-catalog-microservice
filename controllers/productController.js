@@ -44,6 +44,7 @@ exports.getProducts = async (req, res, next) => {
     const products = await Product.find(filter).skip(skip).limit(limit);
     const total = await Product.countDocuments(filter);
 
+    //pass status code 
     res.status(200).json({
       page,
       total_results: total,
