@@ -12,8 +12,7 @@ This microservice provides a RESTful API to manage product catalog data for an e
 - **Containerization:** Docker + Docker Compose
 - **DevOps:** GitHub Actions (CI/CD)
 - **Deployment:** AWS ECS/Fargate
-- **Security:** Helmet, CORS, Input validation
-
+- **Security:** Helmet, CORS, Input validation, IAM roles, security groups, and encrypted environment variables,Static Application Security Testing (SAST) via SonarCloud + Snyk
 ---
 
 ## 📁 Project Structures
