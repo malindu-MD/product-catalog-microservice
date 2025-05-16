@@ -22,8 +22,6 @@ exports.getProducts = async (req, res, next) => {
     const page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
     const limit = Number.isInteger(rawLimit) && rawLimit > 0 ? Math.min(rawLimit, 100) : 10;
     const skip = (page - 1) * limit;
-
-    // Build filter object securely
     const filter = {};
 
     if (typeof rawCategory === 'string' && rawCategory.trim()) {
@@ -39,8 +37,6 @@ exports.getProducts = async (req, res, next) => {
     if (typeof rawSearch === 'string' && rawSearch.trim()) {
       filter.name = { $regex: rawSearch.trim(), $options: 'i' };
     }
-
-    // Fetch products securely
     const products = await Product.find(filter).skip(skip).limit(limit);
     const total = await Product.countDocuments(filter);
 
