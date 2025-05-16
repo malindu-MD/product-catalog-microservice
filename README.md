@@ -18,7 +18,7 @@ This microservice provides a RESTful API to manage product catalog data for an e
 ## 📁 Project Structures
 
 ```
-├── controllers/               # Route logic and business logic
+├── controllers/              # Route logic and business logic
 ├── models/                   # Mongoose schema definitions
 ├── routes/                   # API route definitions
 ├── middleware/               # Middleware (e.g., error handlers, validators)
