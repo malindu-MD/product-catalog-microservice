@@ -1,7 +1,7 @@
 
 # 🛒 Product Catalog Microservice
 
-This microservice provides a RESTful API to manage product catalog data for an e-commerce platform. It supports product creation, listing, filtering, updating, deletion, category retrieval, and product reviews. Built using Node.js, Express.js, and MongoDB, it's containerized with Docker and deployable on cloud platforms like AWS ECS/Fargate.
+This microservice provides a RESTful API to manage product catalog data for an e-commerce platform. It supports product creation, listing, filtering, updating, deletion, category retrieval, and product reviews. Built using Node.js, Express.js, and MongoDB, it's containerized with Docker and deployable on cloud platforms like AWS ECS/Fargate...
 
 ---
 
